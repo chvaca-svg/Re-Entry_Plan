@@ -1,0 +1,36 @@
+1. Walk me through your exact status code decisions for GET /todos/{id}, POST /todos, and DELETE /todos/{id}. Why those codes and not close alternatives?
+
+I choose standard 200 success code for the successful response of the two API endpoints using GET however on the endpoint for retrieving an single item, I include a 404 error as result when the item was not found.
+
+For POST endpoint I have coded the API endpoint to return 204 to notify the item was created but I failed to code include a response when a failure in the creation might occur.
+
+
+2. For POST /todos, what input do you currently trust, what do you reject, and what breaks if a client sends malformed JSON or missing required fields?
+
+I only trust string but I did not include validation of the inputs or rejection for that matter
+
+
+3. Describe your delete semantics: is DELETE /todos/{id} idempotent in your implementation, and what behavior did you choose for a non-existent id? Defend that choice.
+
+It is because it takes a unique id in order to identify the item, because the id unique the item can be only be deleted once. 
+
+If the item doesn't the result still the same (response not content) because it would not find the id on the data source therefore no delete operation needs to be execute
+
+
+4. If two clients create or delete todos at nearly the same time, what race conditions or inconsistent states are possible with your current setup?
+
+deleting wont suffer from racing conditons or inconsistent state as the deleting is done by a unique id
+
+creatng can cause duplicates but with different ids.
+
+5. How does your API behave if the data store fails mid-request (for example, DB unavailable during POST or DELETE)? What does the client see, and is that response intentional?
+
+I did not code for that
+
+6. What is the complexity of your GET /todos and GET /todos/{id} paths today, and what changes first if the dataset grows to 100k records?
+
+I dont know how to answer that
+
+7. Show one design choice you intentionally kept simple for Day 2, and explain the trade-off you accepted by not adding more structure yet.
+
+I did not make the enpoints async to focus on the logic within the endpoints also I use inmemory EF core to handle the datasource, not dependency injection either.
